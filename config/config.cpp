@@ -35,8 +35,8 @@ function<void()> Config::getActionFromType(string& type, string& action)
 
 Config::Config()
 {
-	ifstream file("C:\\Users\\Kk2\\source\\repos\\tuatgt\\build\\hk_config.json"); // for autorun
-	// ifstream file("hk_config.json"); // for normal run
+	//ifstream file("C:\\Users\\Kk2\\source\\repos\\tuatgt\\build\\hk_config.json"); // for autorun
+	ifstream file("hk_config.json"); // for normal run
 	if (!file.is_open()) {
 		cerr << "Failed to open hk_config.json" << endl;
 		return;

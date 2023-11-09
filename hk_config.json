@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "modifier": "ALT",
+  "hotkeys": [
+    {
+      "name": "discord",
+      "button": "B",
+      "action": "cmd.exe /C start C:\\Users\\Kk2\\AppData\\Local\\Discord\\Update.exe --processStart Discord.exe",
+      "type": "system"
+    },
+    {
+      "name": "browser",
+      "button": "D",
+      "action": "cmd.exe /C start C:\\launcher.exe.lnk",
+      "type": "system"
+    },
+    {
+      "name": "hide/show",
+      "button": "H",
+      "action": "hide/show",
+      "type": "hide"
+    },
+    {
+      "name": "close",
+      "button": "W",
+      "action": "close window",
+      "type": "close"
+    }
+  ]
+}

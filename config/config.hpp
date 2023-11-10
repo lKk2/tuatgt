@@ -5,6 +5,7 @@
 #include <fstream>
 #include <Windows.h>
 #include <json.hpp>
+#include <unordered_map>
 
 using namespace std;
 using json = nlohmann::json;
@@ -21,7 +22,7 @@ struct Hotkey {
 
 class Config {
 private:
-	bool visible = true;
+	bool visible = TRUE;
 	string version;
 	vector<Hotkey> configHotkeys;
 	static Config* instancePtr;
@@ -29,6 +30,7 @@ private:
 	function<void()> getActionFromType(string& type, string& action);
 	int mapButtonToVirtualKeyCode(const string& button);
 	Config();
+	UINT getModifierFlags(const string& modifier);
 public:
 	Config(const Config& obj) = delete;
 	static Config* getInstance();
@@ -37,6 +39,6 @@ public:
 	vector<Hotkey> getHotkeys();
 	void setVersion(string version);
 	void setVisible(bool visible);
-	bool RegisterHotkey(Hotkey hotkey);
+	bool registerHotkey(Hotkey hotkey);
 	void print();
 };

@@ -33,10 +33,27 @@ function<void()> Config::getActionFromType(string& type, string& action)
 	};
 }
 
+UINT Config::getModifierFlags(const string& modifier)
+{
+	unordered_map<std::string, UINT> modifierMapping = {
+		{"ALT", MOD_ALT | MOD_NOREPEAT},
+		{"CTRL", MOD_CONTROL | MOD_NOREPEAT},
+		{"SHIFT", MOD_SHIFT | MOD_NOREPEAT},
+	};
+
+	auto it = modifierMapping.find(modifier);
+	if (it != modifierMapping.end()) {
+		return it->second;
+	}
+	else {
+		return 0;
+	}
+}
+
 Config::Config()
 {
-	//ifstream file("C:\\Users\\Kk2\\source\\repos\\tuatgt\\build\\hk_config.json"); // for autorun
-	ifstream file("hk_config.json"); // for normal run
+	ifstream file("C:\\Users\\Kk2\\source\\repos\\tuatgt\\build\\hk_config.json"); // for autorun
+	//ifstream file("hk_config.json"); // for normal run
 	if (!file.is_open()) {
 		cerr << "Failed to open hk_config.json" << endl;
 		return;
@@ -50,6 +67,10 @@ Config::Config()
 		return;
 	}
 	setVersion(config["version"]);
+
+	bool showConsole = config["showconsole"];
+	if (!showConsole) hideNSeek();
+
 	json hk_array = config["hotkeys"];
 	vector<Hotkey> hotkeys;
 
@@ -61,7 +82,7 @@ Config::Config()
 		hotkey.name = hk_json["name"];
 		hotkey.button = hk_json["button"];
 		hotkey.key = mapButtonToVirtualKeyCode(hotkey.button);
-		hotkey.modifiers = MOD_ALT | MOD_NOREPEAT;
+		hotkey.modifiers = getModifierFlags(config["modifier"]);
 		hotkey.type = hk_json["type"];
 		string jsonAction = hk_json["action"];
 		hotkey.action = getActionFromType(hotkey.type, jsonAction);
@@ -101,7 +122,7 @@ vector<Hotkey> Config::getHotkeys()
 	return this->configHotkeys;
 }
 
-bool Config::RegisterHotkey(Hotkey hotkey)
+bool Config::registerHotkey(Hotkey hotkey)
 {
 	return ::RegisterHotKey(NULL, hotkey.id, hotkey.modifiers, hotkey.key);
 }

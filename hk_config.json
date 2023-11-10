@@ -1,6 +1,7 @@
 {
   "version": "1.0",
   "modifier": "ALT",
+  "showconsole": true,
   "hotkeys": [
     {
       "name": "discord",

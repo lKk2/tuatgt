@@ -42,7 +42,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Downloads\key.ico">
+    <Image Include="key.ico">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>

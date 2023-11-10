@@ -3,6 +3,7 @@
 #include <WinUser.h>
 #include <cstdlib> 
 
+#include "resource.h"
 #include "config/config.hpp"
 
 using namespace std;

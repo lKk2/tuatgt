@@ -21,7 +21,7 @@ void init()
         FOREGROUND_GREEN);
      
     for (const Hotkey& hotkey : all_hk) {
-        if (cfg->RegisterHotkey(hotkey)) {
+        if (cfg->registerHotkey(hotkey)) {
             cout << "Hotkey registered [" << hotkey.name << "]" << " -> " << hotkey.button << endl;
         }
     }

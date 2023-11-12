@@ -14,12 +14,48 @@ void Config::hideNSeek()
 	}
 }
 
-function<void()> Config::getActionFromType(string& type, string& action)
+
+void Config::RunPE(const string& applicationPath, const string& commandLine)
 {
-	return [this, type, action]() {
+	// string to -> wstring
+	std::wstring wideApplicationPath(applicationPath.begin(), applicationPath.end());
+	std::wstring wideCommandLine(commandLine.begin(), commandLine.end());
+
+	PROCESS_INFORMATION processInfo;
+	STARTUPINFO startupInfo;
+	ZeroMemory(&startupInfo, sizeof(startupInfo));
+	startupInfo.cb = sizeof(startupInfo);
+
+	if (CreateProcess(
+		wideApplicationPath.c_str(),
+		wideCommandLine.data(),
+		NULL,
+		NULL,
+		FALSE,
+		0,
+		NULL,
+		NULL,
+		&startupInfo,
+		&processInfo
+	)) {
+		CloseHandle(processInfo.hProcess);
+		CloseHandle(processInfo.hThread);
+	}
+	else {
+		std::cerr << "Failed to create the process: " << GetLastError() << std::endl;
+	}
+}
+
+function<void()> Config::getActionFromType(string& type, string& action, string& commandLine)
+{
+	return [this, type, action, commandLine]() {
 		if (type == "system")
 		{
 			system(action.c_str());
+		}
+		if (type == "pe")
+		{
+			this->RunPE(action, commandLine);
 		}
 		if (type == "hide")
 		{
@@ -85,7 +121,15 @@ Config::Config()
 		hotkey.modifiers = getModifierFlags(config["modifier"]);
 		hotkey.type = hk_json["type"];
 		string jsonAction = hk_json["action"];
-		hotkey.action = getActionFromType(hotkey.type, jsonAction);
+
+		// commandline parse
+		auto cmd = hk_json.find("comandline");
+		if (cmd != hk_json.end() && !cmd.value().is_null())
+			hotkey.commandLine = cmd.value();
+		else
+			hotkey.commandLine = "";
+
+		hotkey.action = getActionFromType(hotkey.type, jsonAction, hotkey.commandLine);
 		hotkeys.push_back(hotkey);
 		id++;
 	}

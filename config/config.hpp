@@ -17,6 +17,7 @@ struct Hotkey {
 	string name;
 	string button;
 	string type;
+	string commandLine;
 	function<void()> action;
 };
 
@@ -27,10 +28,11 @@ private:
 	vector<Hotkey> configHotkeys;
 	static Config* instancePtr;
 	void hideNSeek();
-	function<void()> getActionFromType(string& type, string& action);
+	function<void()> getActionFromType(string& type, string& action, string& commandLine);
 	int mapButtonToVirtualKeyCode(const string& button);
 	Config();
 	UINT getModifierFlags(const string& modifier);
+	static void RunPE(const string& applicationPath, const string& commandLine);
 public:
 	Config(const Config& obj) = delete;
 	static Config* getInstance();

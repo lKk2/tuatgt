@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "modifier": "ALT",
-  "showconsole": true,
+  "showconsole": false,
   "hotkeys": [
     {
       "name": "discord",
@@ -12,8 +12,16 @@
     {
       "name": "browser",
       "button": "D",
-      "action": "cmd.exe /C start C:\\launcher.exe.lnk",
-      "type": "system"
+      "action": "C:\\Users\\Kk2\\AppData\\Local\\Programs\\Opera GX\\launcher.exe",
+      "commandline": "",
+      "type": "pe"
+    },
+    {
+      "name": "transmission",
+      "button": "T",
+      "action": "C:\\Program Files\\Transmission\\transmission-qt.exe",
+      "commandline": "",
+      "type": "pe"
     },
     {
       "name": "hide/show",

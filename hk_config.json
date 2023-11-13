@@ -1,7 +1,7 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "modifier": "ALT",
-  "showconsole": false,
+  "showconsole": true,
   "hotkeys": [
     {
       "name": "discord",
@@ -26,13 +26,13 @@
     {
       "name": "hide/show",
       "button": "H",
-      "action": "hide/show",
+      "action": "hide/show console",
       "type": "hide"
     },
     {
       "name": "close",
       "button": "W",
-      "action": "close window",
+      "action": "close active window",
       "type": "close"
     }
   ]

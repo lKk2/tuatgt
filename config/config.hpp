@@ -23,6 +23,7 @@ struct Hotkey {
 
 class Config {
 private:
+	static string GetExecutablePath();
 	bool visible = TRUE;
 	string version;
 	vector<Hotkey> configHotkeys;

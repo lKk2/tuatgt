@@ -1,5 +1,6 @@
 #include "config.hpp"
 
+constexpr auto CFG_NAME = "\\hk_config.json";
 
 void Config::hideNSeek()
 {
@@ -86,10 +87,19 @@ UINT Config::getModifierFlags(const string& modifier)
 	}
 }
 
+string Config::GetExecutablePath()
+{
+	char buffer[MAX_PATH];
+	GetModuleFileNameA(NULL, buffer, MAX_PATH);
+	string::size_type pos = string(buffer).find_last_of("\\/");
+	return string(buffer).substr(0, pos);
+}
+
 Config::Config()
 {
-	//ifstream file("C:\\Users\\Kk2\\source\\repos\\tuatgt\\build\\hk_config.json"); // for autorun
-	ifstream file("hk_config.json"); // for normal run
+	string executablePath = this->GetExecutablePath();
+	string filePath = executablePath + CFG_NAME;
+	ifstream file(filePath);
 	if (!file.is_open()) {
 		cerr << "Failed to open hk_config.json" << endl;
 		return;
